@@ -1,37 +1,29 @@
-## Машинное Обучение | ДЗ1
+![python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue) ![fastapi](https://img.shields.io/badge/fastapi-109989?style=for-the-badge&logo=FASTAPI&logoColor=white) ![pandas](https://img.shields.io/badge/Pandas-2C2D72?style=for-the-badge&logo=pandas&logoColor=white) ![numpy](https://img.shields.io/badge/Numpy-777BB4?style=for-the-badge&logo=numpy&logoColor=white) ![catboost](https://img.shields.io/badge/catboost-fac204?style=for-the-badge&logo=catboost)
 
-### Что было сделано?
+## Machine Learning Homework ###
 
-#### DS часть ([код](https://github.com/sirenescx/ml_hw_1/blob/master/notebooks/HW1_Regression_with_inference.ipynb))
+### What was done?
 
- - предобработка и очистка данных по условию задания
- - обучение моделей и подбор гиперпараметров по условию задания
- - написан код для продакшен метрики
- - модель сохранена в формате `.pickle`
- - дополнительно: 
-   - посчитаны статистики таргета (среднее, минимальное и максимальное значения, квантили)
-   - нарисован боксплот с выбросами
-   - изучена зависимость средней стоимости автомобиля от значений категориальных переменных
-   - использован `CatBoostEncoder` (target encoding) для кодирования категориальных переменных, кроме `seats`
-   - добавлены полиномиальные фичи
+#### DS part ([code](https://github.com/sirenescx/ml_hw_1/blob/master/notebooks/HW1_Regression_with_inference.ipynb))
 
-**Результаты:** лучшая модель на тестовой выборке дает `R^2 score = 0.8473638652284115`, `business_metrics = 0.294`
+ - data preprocessing 
+ - model training and hyperparameter optimization
+ - production metrics implementation
+ - model saving in `.pickle` format
+ - additionally: 
+   - calculation of targeting statistics (average, minimum and maximum values, quantiles)
+   - boxplot with emissions visualization
+   - studied the dependence of the average car value on the values of categorical variables
+   - `CatBoostEncoder` (target encoding) used to encode categorical variables except `seats`.
+   - polynomial features added
 
-#### FastApi часть ([код](https://github.com/sirenescx/ml_hw_1/blob/master/api/api.py))
-- написан класс с пайплайном ([код](https://github.com/sirenescx/ml_hw_1/blob/master/api/preprocessing_pipeline/pipeline.py)) для предобработки, очистки, кодирования, скейлинга и etc данных (из исходного файла получаем то, что можно скормить модели)
-- реализовано api c двумя методами:
-  - `predict_item`, получающим на вход json с одним объектом и возвращающим одно вещественное число – предсказание модели
-  - `predict_items`, получающим на вход csv файл с одним или несколькими объектами и возвращающим csv файл, содержащий признаковое описание объектов и предсказания для каждого из них
+**Results:** best model on test sample gives `R^2 score = 0.8473638652284115`, `business_metrics = 0.294`
 
-**Результаты:**
+#### FastApi part ([code](https://github.com/sirenescx/ml_hw_1/blob/master/api/api.py))
+- implemented a pipeline class ([code](https://github.com/sirenescx/ml_hw_1/blob/master/api/preprocessing_pipeline/pipeline.py)) for preprocessing, encoding and scaling data.
+- implemented api with two methods:
+  - `predict_item`, which receives JSON file with one object as input and returns one real number - model prediction
+  - `predict_items`, which receives as input a CSV file with one or more objects and returns a CSV file containing a feature description of the objects and predictions for each of them
+
+### Results
 ![demo](pictures/demo.png)
-
-**Вопросы:** в исходном файле метод `predict_items` получает на вход `List[Item]` и возвращает `List[float]`, с описанием не сходится, сделала как в описании
-
-#### Что дало буст в качестве?
-Полиномиальные фичи
-
-#### Что не получилось/стоило сделать?
-
- - не получилось нормально обработать `torque` – где-то вообще нет единиц измерения, поэтому непонятно, где-то в `max_torque_rpm` интервал значений, что там брать, среднее?  Код написала, но в общем проще было дропнуть...
- - можно было побольше заняться Feature Engineeringом и может быть попробовать еще модели
